@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
     void FireLaser () 
     {
         _canFire = Time.time + _fireRate ; 
-        Instantiate(_laserPrefab, new Vector3(transform.position.x,transform.position.y+0.8f, 0), Quaternion.identity );
+        Instantiate(_laserPrefab, new Vector3(transform.position.x,transform.position.y+1.05f, 0), Quaternion.identity );
     }
 
     public void Damage() //has to be accessible by other gameobjects
