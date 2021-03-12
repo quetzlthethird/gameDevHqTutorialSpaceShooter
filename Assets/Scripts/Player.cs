@@ -6,19 +6,32 @@ public class Player : MonoBehaviour
 {
     [SerializeField] //allows the value of the private var to be edited in Unity
     private float _speed = 3.5f ; // best to keep it private
+
     [SerializeField]
     private GameObject _laserPrefab ;
+
     [SerializeField]
     private float _fireRate = 0.5f ;
+
     private float _canFire  = -1.0f ;
+
     [SerializeField]
     private int _lives = 3 ;
+
+    private SpawnManager _spawnManager ;
 
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3 ( 0 , 0 , 0);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        //find, get component
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("The spawn manager is NULL.");
+        }
     }
 
     // Update is called once per frame
@@ -56,6 +69,7 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3F, transform.position.y, 0); 
         }
+
     } // end calculatemovement
 
 
@@ -71,6 +85,8 @@ public class Player : MonoBehaviour
         
         if (_lives < 1)
         {
+            //communicate with spawn manager and have htem stop
+            _spawnManager.onPlayerDeath();
             Destroy(this.gameObject);
         }
     }
