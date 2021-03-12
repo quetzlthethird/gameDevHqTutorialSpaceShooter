@@ -9,8 +9,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab ;
     [SerializeField]
-    private float _fireRate = 0.5f;
-    private float _canFire  = -1.0f;
+    private float _fireRate = 0.5f ;
+    private float _canFire  = -1.0f ;
+    [SerializeField]
+    private int _lives = 3 ;
 
 
     // Start is called before the first frame update
@@ -52,7 +54,7 @@ public class Player : MonoBehaviour
         }
         else if (transform.position.x <= -11.3F) 
         {
-            transform.position = new Vector3(11.3F, transform.position.y, 0);
+            transform.position = new Vector3(11.3F, transform.position.y, 0); 
         }
     } // end calculatemovement
 
@@ -63,6 +65,15 @@ public class Player : MonoBehaviour
         Instantiate(_laserPrefab, new Vector3(transform.position.x,transform.position.y+0.8f, 0), Quaternion.identity );
     }
 
+    public void Damage() //has to be accessible by other gameobjects
+    {
+        _lives--;
+        
+        if (_lives < 1)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     
 } //end Class
 
