@@ -360,6 +360,8 @@ MonoBehaviour:
     type: 3}
   _fireRate: 0.15
   _lives: 3
+  _tripleShotPrefab: {fileID: 7991507624491986904, guid: 7cbbfc827ddeb53e094292a28bea3cc9,
+    type: 3}
 --- !u!212 &1292864650
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -565,6 +567,8 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 8134421507652578648, guid: 1b8020d344e184060a902003be5a358f,
     type: 3}
   _enemyContainer: {fileID: 15845979}
+  _tripleShotPowerUp: {fileID: 7360030123891896992, guid: 3224079aca7e8ef228a56afaa7587c1b,
+    type: 3}
 --- !u!4 &2099292064
 Transform:
   m_ObjectHideFlags: 0
