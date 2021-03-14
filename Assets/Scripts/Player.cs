@@ -6,24 +6,40 @@ public class Player : MonoBehaviour
 {
     [SerializeField] //allows the value of the private var to be edited in Unity
     private float _speed = 3.5f ; // best to keep it private
+    [SerializeField]
+    private float _speedMultiplier = 2.0f;
+    private bool _isSpeedActive = false ;
+    [SerializeField]
+    private GameObject _speedPrefab ; 
+    // [SerializeField]
+    // private float _speedBoosted = 8.0f;
+
 
     [SerializeField]
     private GameObject _laserPrefab ;
+    private bool _isTripleShotActive = false ;
+    [SerializeField]
+    private GameObject _tripleShotPrefab ;
+
 
     [SerializeField]
     private float _fireRate = 0.5f ;
-
     private float _canFire  = -1.0f ;
+
 
     [SerializeField]
     private int _lives = 3 ;
 
+
     private SpawnManager _spawnManager ;
 
-    //variable for isTripleShotActive 
-    private bool _isTripleShotActive = false ;
-    [SerializeField]
-    private GameObject _tripleShotPrefab ;
+
+
+
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +65,8 @@ public class Player : MonoBehaviour
         }
 
     } //end update
+
+//BASIC ACTIONS ===========================================================================
     void CalculateMovement () 
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -56,12 +74,12 @@ public class Player : MonoBehaviour
 
         //player inputed movement
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        transform.Translate(direction * _speed * Time.deltaTime);
+     
+        transform.Translate(direction * _speed * Time.deltaTime); 
 
-        //lock verticals
+        //lock X&Y
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
-        //lock horizontals
         if (transform.position.x >= 11.3f )
         {
             transform.position = new Vector3 (-11.3f, transform.position.y, 0);
@@ -72,8 +90,6 @@ public class Player : MonoBehaviour
         }
 
     } // end calculatemovement
-
-
     void FireLaser () 
     {
         _canFire = Time.time + _fireRate ; 
@@ -105,6 +121,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+//POWERUPS=================================================================================
     public void TripleShotActive()
     {
         _isTripleShotActive = true ;
@@ -115,6 +133,20 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isTripleShotActive = false ;
+    }
+
+    public void SpeedActive()
+    {
+        _isSpeedActive = true;
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedPowerDownRoutine() );
+    }
+
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isSpeedActive = false;
+        _speed /= _speedMultiplier;
     }
     
 } //end Class
@@ -201,3 +233,16 @@ public class Player : MonoBehaviour
     //offshoot and firing lasers =======================================
          //alternative for offshoot
         // Instantiate(_laserPrefab, transform.position+ new Vector3(0,0.8f,0), Quaternion.identity );
+
+    //speed boosting
+    //below works fine, but we can remove the if statement as seen above
+
+      //IF SPEEDBOOST ACTIVE, have speed be 8x, wait 5 seconds, go back to default
+        // if (_isSpeedActive == true) 
+        // {
+        //     transform.Translate(direction * _speedBoosted * Time.deltaTime); 
+        // }
+        // else 
+        // {
+        //     transform.Translate(direction * _speed * Time.deltaTime);
+        // }

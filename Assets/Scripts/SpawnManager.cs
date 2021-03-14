@@ -28,7 +28,6 @@ public class SpawnManager : MonoBehaviour
     
     IEnumerator SpawnEnemyRoutine()
     {
-        //I had limited it by a new option enemycount, but this created 10 at once
         while (_stopSpawning == false)
         {  
             Vector3 posToSpawn = new Vector3(Random.Range(-11.0f,11.0f), 10.0f, 0);
@@ -44,7 +43,6 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9.0f,9.0f), 10.0f, 0);
             GameObject newPowerUp = Instantiate(_tripleShotPowerUp, posToSpawn, Quaternion.identity);
-            // _PowerUpSpawnRate = Random.Range(3.0f,7.0f);
             yield return new WaitForSeconds(Random.Range(3,8) );
         }
     }
