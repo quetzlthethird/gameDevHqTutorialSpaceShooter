@@ -16,8 +16,8 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnRoutine() );
-        StartCoroutine(PowerupRoutine() );
+        StartCoroutine(SpawnEnemyRoutine() );
+        StartCoroutine(SpawnPowerupRoutine() );
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
 
     }
     
-    IEnumerator SpawnRoutine()
+    IEnumerator SpawnEnemyRoutine()
     {
         //I had limited it by a new option enemycount, but this created 10 at once
         while (_stopSpawning == false)
@@ -38,13 +38,14 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator PowerupRoutine()
+    IEnumerator SpawnPowerupRoutine()
     {
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9.0f,9.0f), 10.0f, 0);
             GameObject newPowerUp = Instantiate(_tripleShotPowerUp, posToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(10.0f);
+            // _PowerUpSpawnRate = Random.Range(3.0f,7.0f);
+            yield return new WaitForSeconds(Random.Range(3,8) );
         }
     }
 

@@ -49,9 +49,6 @@ public class Player : MonoBehaviour
         }
 
     } //end update
-
-
-
     void CalculateMovement () 
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -83,13 +80,16 @@ public class Player : MonoBehaviour
 
         if (_isTripleShotActive == true )
         {
-            Instantiate(_tripleShotPrefab, new Vector3(transform.position.x, transform.position.y+1.05f,0), Quaternion.identity ) ;
-
-            _isTripleShotActive = false ; 
+            // Instantiate(_tripleShotPrefab, new Vector3(transform.position.x, transform.position.y+1.05f,0), Quaternion.identity ) ;
+            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+            
+            // Having this here meant only 1 use of triple shot.
+            // Game Design wants to have a duration, not only ony use
+            // _isTripleShotActive = false ; 
         }
         else 
         {
-            Instantiate (_laserPrefab, new Vector3(transform.position.x, transform.position.y+1.05f,0), Quaternion.identity ) ;
+            Instantiate(_laserPrefab, new Vector3(transform.position.x, transform.position.y+1.05f,0), Quaternion.identity ) ;
         }
     }
 
@@ -105,9 +105,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TripleShot()
+    public void TripleShotActive()
     {
         _isTripleShotActive = true ;
+        StartCoroutine(TripleShotPowerDownRoutine() );
+    }
+
+    IEnumerator TripleShotPowerDownRoutine() 
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isTripleShotActive = false ;
     }
     
 } //end Class

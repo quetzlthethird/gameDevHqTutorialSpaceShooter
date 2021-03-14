@@ -360,7 +360,7 @@ MonoBehaviour:
     type: 3}
   _fireRate: 0.15
   _lives: 3
-  _tripleShotPrefab: {fileID: 7991507624491986904, guid: 7cbbfc827ddeb53e094292a28bea3cc9,
+  _tripleShotPrefab: {fileID: 5614945630827816927, guid: d4e763463d3ddc59b9063dbc1e371405,
     type: 3}
 --- !u!212 &1292864650
 SpriteRenderer:
