@@ -38,7 +38,7 @@ public class Powerup : MonoBehaviour
                         player.SpeedActive();
                         break;
                     case 2 : 
-                        Debug.Log("SHIELDS TO MAX"); 
+                        player.ShieldActive();
                         break;
                     default:
                         Debug.Log("Default in powerupID switch statement");

@@ -9,18 +9,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedMultiplier = 2.0f;
     private bool _isSpeedActive = false ;
-    [SerializeField]
-    private GameObject _speedPrefab ; 
-    // [SerializeField]
-    // private float _speedBoosted = 8.0f;
 
-
+    private bool _isTripleShotActive = false ;
     [SerializeField]
     private GameObject _laserPrefab ;
-    private bool _isTripleShotActive = false ;
     [SerializeField]
     private GameObject _tripleShotPrefab ;
 
+    private bool _isShieldActive = false;     
+    [SerializeField]
+    private GameObject _shieldVisual;
+    //variable ref to shield visualizer
 
     [SerializeField]
     private float _fireRate = 0.5f ;
@@ -46,7 +45,6 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3 ( 0 , 0 , 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        //find, get component
 
         if (_spawnManager == null)
         {
@@ -96,12 +94,7 @@ public class Player : MonoBehaviour
 
         if (_isTripleShotActive == true )
         {
-            // Instantiate(_tripleShotPrefab, new Vector3(transform.position.x, transform.position.y+1.05f,0), Quaternion.identity ) ;
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-            
-            // Having this here meant only 1 use of triple shot.
-            // Game Design wants to have a duration, not only ony use
-            // _isTripleShotActive = false ; 
         }
         else 
         {
@@ -111,11 +104,18 @@ public class Player : MonoBehaviour
 
     public void Damage() //has to be accessible by other gameobjects
     {
+        if (_isShieldActive == true)
+        {
+            // Debug.Log("Shields deactivated");
+            _isShieldActive = false ;
+            _shieldVisual.SetActive(false);
+            return;
+        }
+
         _lives--;
         
         if (_lives < 1)
         {
-            //communicate with spawn manager and have htem stop
             _spawnManager.onPlayerDeath();
             Destroy(this.gameObject);
         }
@@ -145,8 +145,14 @@ public class Player : MonoBehaviour
     IEnumerator SpeedPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _isSpeedActive = false;
-        _speed /= _speedMultiplier;
+        _isSpeedActive = false; 
+        _speed = _speed /_speedMultiplier;
+    }
+
+    public void ShieldActive()
+    {
+        _isShieldActive = true;
+        _shieldVisual.SetActive(true);
     }
     
 } //end Class
